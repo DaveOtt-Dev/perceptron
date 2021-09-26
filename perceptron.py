@@ -2,14 +2,13 @@ from typing import Iterable
 
 class Perceptron:
 
-    def __init__(self, max_iterations: int = 20, training_multiplier: float = 1, initial_weight: int = 0, bias: int = 0, out_file: str = "output.txt"):
+    def __init__(self, max_iterations: int = 20, training_multiplier: float = 1, initial_weight: int = 0, bias: int = 0):
         self.max_iterations = max_iterations
         self.training_multiplier = training_multiplier
         self.initial_weight = initial_weight
         self.bias = bias
 
         self.__fit_completed = False
-        self.out_file = out_file
 
 
     def fit(self, training_data: Iterable, training_labels: Iterable):
@@ -79,17 +78,4 @@ class Perceptron:
             example = testing_data[i]
             predictions.append(self.__predict_with_weight(example))
 
-        self.__write_to_out_file(testing_data, predictions)
-
         return predictions
-
-
-    def __write_to_out_file(self, data, predictions):
-        if len(data) is not len(predictions):
-            raise Exception("Data and predictions must be of the same length")
-
-        with open(self.out_file, "w") as out_file:
-            for i in range(len(data)):
-                example = data[i]
-                prediction = predictions[i]
-                out_file.write(str(example) + ":  " + str(prediction) + "\n")
