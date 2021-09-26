@@ -3,6 +3,25 @@ from typing import Iterable, Literal
 class Perceptron:
 
     def __init__(self, max_iterations: int = 1, training_multiplier: float = 1, initial_weight: int = 0, bias: int = 0, averaged: bool = False):
+        """Perceptron
+
+        Perceptron Initializer
+
+        Args:
+            max_iterations: Number of iterations through the data completed during fit.
+              Default: 1
+            training_multiplier: Weights are updated when an incorrect prediction is made
+              during fitting. Multiplier determines what to multiply the data by when making
+              this update.
+              Default: 1
+            initial_weight: Weights are initialized to this number before fitting.
+              Default: 0
+            bias: Training bias. Bias is added in to the predicted value
+              Default: 0
+            averaged: Set to true if you want to make use of an averaged perceptron rather than
+              the traditional
+              Default: False
+        """
         self.max_iterations = max_iterations
         self.training_multiplier = training_multiplier
         self.initial_weight = initial_weight
