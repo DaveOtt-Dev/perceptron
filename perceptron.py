@@ -1,12 +1,10 @@
 from typing import Iterable
-from math import abs
-
 
 class Perceptron:
 
-    def __init__(self, max_iterations: int = 20, training_multiplier: int = 1, initial_weight: int = 0, bias: int = 0, out_file: str = "output.txt"):
+    def __init__(self, max_iterations: int = 20, training_multiplier: float = 1, initial_weight: int = 0, bias: int = 0, out_file: str = "output.txt"):
         self.max_iterations = max_iterations
-        self.training_multiplier = abs(training_multiplier)
+        self.training_multiplier = training_multiplier
         self.initial_weight = initial_weight
         self.bias = bias
 
@@ -24,14 +22,14 @@ class Perceptron:
         if len(training_data) != len(training_labels):
             raise Exception("Training data and labels must be of the same length")
 
-        self.weights = [self.initial_weight] * len(training_labels)
+        self.weights = [self.initial_weight] * len(training_data[0])
 
-        for iteration in self.max_iterations:
-            if iteration is not 0:
+        for iteration in range(self.max_iterations):
+            if iteration != 0:
                 if last_weights is self.weights:
                     break
 
-            last_weights = self.weights
+            last_weights = self.weights[:]
 
             for i in range(len(training_data)):
                 training_example = training_data[i]
@@ -54,14 +52,11 @@ class Perceptron:
 
         answer += self.bias
 
-        if answer > 0:
-            return 1
-
-        return 0
+        return answer
 
 
     def __adjust_weights(self, training_example: Iterable, multiplier: int):
-        for i in range(self.weights):
+        for i in range(len(self.weights)):
             self.weights[i] += (training_example[i] * multiplier) + self.bias
 
 
@@ -97,6 +92,4 @@ class Perceptron:
             for i in range(len(data)):
                 example = data[i]
                 prediction = predictions[i]
-                out_file.write(str(example) + ":  " + str(prediction))
-
-
+                out_file.write(str(example) + ":  " + str(prediction) + "\n")
